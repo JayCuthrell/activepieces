@@ -1,0 +1,64 @@
+{
+  "created": "1707530172502",
+  "updated": "1707530172502",
+  "name": "RSS to LinkedIn",
+  "description": "",
+  "tags": [],
+  "pieces": [
+    "@activepieces/piece-rss",
+    "@activepieces/piece-linkedin"
+  ],
+  "template": {
+    "displayName": "RSS to LinkedIn",
+    "trigger": {
+      "name": "trigger",
+      "valid": true,
+      "displayName": "New Item In Feed",
+      "type": "PIECE_TRIGGER",
+      "settings": {
+        "pieceName": "@activepieces/piece-rss",
+        "pieceVersion": "0.3.5",
+        "pieceType": "OFFICIAL",
+        "packageType": "REGISTRY",
+        "triggerName": "new-item",
+        "input": {
+          "rss_feed_url": "https://fudge.org/rss.xml"
+        },
+        "inputUiInfo": {}
+      },
+      "nextAction": {
+        "name": "step_1",
+        "type": "PIECE",
+        "valid": true,
+        "settings": {
+          "input": {
+            "auth": "{{connections['linkedin2']}}",
+            "link": "{{trigger['link']}}",
+            "text": "🔥⏲️ Fudge Sunday #newsletter \"{{trigger['title']}}\" by {{trigger['author']}}\n(via #activepieces)",
+            "imageUrl": "{{trigger['rss:enclosure']['@']['url']}}",
+            "linkTitle": "{{trigger['title']}} by {{trigger['author']}}",
+            "visibility": "PUBLIC",
+            "linkDescription": "{{trigger['title']}} by {{trigger['author']}}"
+          },
+          "pieceName": "@activepieces/piece-linkedin",
+          "pieceType": "OFFICIAL",
+          "actionName": "create_share_update",
+          "inputUiInfo": {},
+          "packageType": "REGISTRY",
+          "pieceVersion": "0.1.4",
+          "errorHandlingOptions": {
+            "retryOnFailure": {
+              "value": false
+            },
+            "continueOnFailure": {
+              "value": false
+            }
+          }
+        },
+        "displayName": "Create Share Update"
+      }
+    },
+    "valid": true
+  },
+  "blogUrl": ""
+}

@@ -1,0 +1,59 @@
+{
+  "created": "1707530189940",
+  "updated": "1707530189940",
+  "name": "RSS to Mastodon",
+  "description": "",
+  "tags": [],
+  "pieces": [
+    "@activepieces/piece-rss",
+    "@activepieces/piece-mastodon"
+  ],
+  "template": {
+    "displayName": "RSS to Mastodon",
+    "trigger": {
+      "name": "trigger",
+      "valid": true,
+      "displayName": "New Item In Feed",
+      "type": "PIECE_TRIGGER",
+      "settings": {
+        "pieceName": "@activepieces/piece-rss",
+        "pieceVersion": "0.3.5",
+        "pieceType": "OFFICIAL",
+        "packageType": "REGISTRY",
+        "triggerName": "new-item",
+        "input": {
+          "rss_feed_url": "https://fudge.org/rss.xml"
+        },
+        "inputUiInfo": {}
+      },
+      "nextAction": {
+        "name": "step_1",
+        "type": "PIECE",
+        "valid": true,
+        "settings": {
+          "input": {
+            "auth": "{{connections['jay']}}",
+            "status": "🔥⏲️ Fudge Sunday #newsletter \"{{trigger['title']}}\" {{trigger['permalink']}} \n(via #activepieces)"
+          },
+          "pieceName": "@activepieces/piece-mastodon",
+          "pieceType": "OFFICIAL",
+          "actionName": "post_status",
+          "inputUiInfo": {},
+          "packageType": "REGISTRY",
+          "pieceVersion": "0.4.2",
+          "errorHandlingOptions": {
+            "retryOnFailure": {
+              "value": false
+            },
+            "continueOnFailure": {
+              "value": false
+            }
+          }
+        },
+        "displayName": "Post Status"
+      }
+    },
+    "valid": true
+  },
+  "blogUrl": ""
+}
